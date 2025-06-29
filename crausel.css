@@ -1,0 +1,20 @@
+/* Membuat ukuran carousel menjadi 40% */
+.carousel-container {
+    width: 40%; /* Lebar carousel */
+    margin: auto; /* Untuk memposisikan carousel di tengah */
+  }
+  
+  .carousel img {
+    height: 100%; /* Memastikan gambar proporsional */
+    width: auto;
+    object-fit: cover; /* Menyesuaikan gambar dengan baik */
+  }
+  
+@media (max-width: 768px) { /* Untuk tablet dan smartphone */
+    .carousel-container {
+        width: 90%; /* Perbesar ke 90% untuk perangkat kecil */
+    }
+    .carousel img {
+      height: auto; 
+    }
+}

@@ -1,0 +1,219 @@
+/* Container untuk kartu */
+.movie-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Jarak antar card */
+}
+
+.konten {
+    max-height:60vh; /* Maksimum tinggi */
+    overflow-y: scroll; /* Scroll hanya untuk vertikal */
+    /* scrollbar-width: none;  */
+    /* Menyembunyikan scrollbar untuk Firefox */
+}
+
+/* Menyembunyikan scrollbar untuk Chrome, Edge, dan Safari */
+/* .konten::-webkit-scrollbar {
+    display: none;
+  } */
+
+  /* Tambahkan gaya untuk responsivitas */
+  @media (max-width: 768px) {
+    .konten {
+        max-height: 55vh; /* Kurangi tinggi untuk layar lebih kecil */
+    }
+  }
+
+/* Kartu film */
+.movie-card {
+    position: relative; /* Dibutuhkan untuk posisi absolut elemen di dalamnya */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 19.2%; /* Default untuk layar besar */
+    margin-bottom: 15px; /* Jarak antar baris */
+    overflow: hidden; /* Supaya elemen tidak keluar dari card */
+}
+
+.movie-card img {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Mengatur gambar agar proporsional */
+}
+
+/* Rating di pojok kanan atas */
+.movie-card .card-rating {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: clamp(12px, 1.5vw, 14px); 
+    /* Minimum 12px, responsif berdasarkan viewport, maksimum 14px */
+    color: #ffc107; /* Warna emas untuk rating */
+    background-color: rgba(0, 0, 0, 0.7); /* Latar belakang semi-transparan */
+    padding: 5px 10px;
+    border-radius: 0px 8px 0px 8px;
+    font-weight: bold;
+    z-index: 10; /* Pastikan berada di atas gambar */
+    /* opacity: 0.5; */
+}
+
+/* Body card */
+.movie-card .card-body {
+    /* padding: 15px; */
+    background-color: #1c1c1c; /* Warna latar belakang untuk body card */
+    color: beige;
+    text-align: center;
+    margin: -10px;
+}
+
+.movie-card .card-title {
+    /* font-size: clamp(14px, 2vw, 18px);  */
+    /* Minimum 14px, responsif berdasarkan viewport, maksimum 18px */
+    font-weight: bold;
+}
+
+.movie-card .card-durasi {
+    /* font-size: clamp(12px, 1.5vw, 14px);  */
+    /* Minimum 12px, responsif berdasarkan viewport, maksimum 14px */
+    /* background-color: rgba(255, 255, 255, 0.9);  */
+    /* Latar belakang putih semi-transparan */
+    border-radius: 8px;
+    padding: 5px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+/* Tombol */
+.movie-card .btn-ticket {
+    background-color: #007bff;
+    color: #fff;
+    /* font-size: clamp(12px, 1.5vw, 16px);  */
+    /* Font untuk tombol responsif */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.movie-card .btn-ticket:hover {
+    background-color: #0056b3;
+    cursor: pointer;
+}
+
+/* Tombol hapus */
+.movie-card .btn-hapus-movie {
+    background-color: #ff4242;
+    color: #fff;
+    /* font-size: clamp(12px, 1.5vw, 16px);  */
+    /* Font untuk tombol responsif */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.movie-card .btn-hapus-movie:hover {
+    background-color: #b30000;
+    cursor: pointer;
+}
+
+/* Responsivitas */
+@media (max-width: 992px) { /* Untuk tablet */
+    .movie-card {
+        width: 30%; /* Muat 2 card per baris */
+    }
+    .movie-container {
+        justify-content: center; 
+    }
+}
+
+@media (max-width: 576px) { /* Untuk smartphone */
+    .movie-card {
+        width: 48%; /* Muat 1 card per baris */
+    }
+    .movie-container {
+        justify-content: center; 
+    }
+}
+
+/* Tampilan Card film top */
+/* Container untuk kartu dengan scroll horizontal */
+.movie-container-top {
+    display: flex;
+    /* flex-wrap: nowrap;  */
+    /* Tidak membuat baris baru */
+    /* overflow-x: auto;  */
+    /* Scroll horizontal */
+    gap: 10px; /* Jarak antar card */
+    /* padding: 10px; */
+    width: 100%; /* Lebar penuh */
+    height: auto; /* Tinggi penuh */
+    /* max-height: 60vh;  */
+    /* Batas tinggi maksimum */
+    overflow: auto; /* Mengaktifkan scroll horizontal dan vertikal */
+    /* white-space: nowrap;  */
+    /* Mencegah kursi membungkus ke baris baru */
+    /* position: relative;  */
+    /* Untuk memastikan scroll berfungsi di dalam container */
+    scrollbar-width: thin; /* Untuk Firefox */
+}
+
+/* Scrollbar untuk Chrome, Edge, dan Safari */
+.movie-container-top::-webkit-scrollbar {
+    height: 10px; /* Tinggi scrollbar horizontal */
+}
+
+.movie-container-top::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.5); /* Warna scrollbar */
+    border-radius: 5px; /* Rounded scrollbar */
+}
+
+.movie-container-top::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.7); /* Hover warna scrollbar */
+}
+
+/* Kartu film */
+.movie-card-top {
+    flex: 0 0 auto; /* Tidak bisa mengecil dan tidak melebar */
+    width: 200px; /* Ukuran tetap untuk setiap kartu */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+}
+
+/* Atur gambar agar proporsional */
+.movie-card-top img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; 
+}
+
+/* Scroll button */
+/* Tombol navigasi kiri dan kanan */
+.scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.scroll-btn.left {
+    left: 10px;
+}
+
+.scroll-btn.right {
+    right: 10px;
+}
+
