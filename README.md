@@ -1,10 +1,19 @@
 # Nama Proyek
-Deskripsi singkat tentang apa proyek ini dan tujuannya.
+E - Tiket Bioskop 
+Ini merupakan tugas akhir dari Mata Kuliah  Sistem Basis Data ()
 
 ## 🔧 Fitur
-- Fitur utama 1
-- Fitur utama 2
-- Fitur utama 3
+- Login &  Register
+- Memesan Tiket Film Berdasarkan Jadwal yang di buat oleh admin
+- Admin Membuat Film Baru dan Menyesuaikan Status Kursi Studio
 
 ## 🚀 Instalasi
-Langkah-langkah untuk menginstal dan menjalankan proyek ini secara lokal:
+- Ubah nama folder movie.example menjadi movie
+- Buka aplikasi XAMPP dan start Apache dan MySQL nya
+- Import database bioskop.sql
+
+## 🛠️ Alat Yang Digunakan
+- PHP Native
+- Bootstrap
+- IDE VSCode
+- Database MySQL
