@@ -1,6 +1,6 @@
 # Nama Proyek
 E - Tiket Bioskop 
-Ini merupakan tugas akhir dari Mata Kuliah  Sistem Basis Data ()
+Ini merupakan tugas akhir dari Mata Kuliah Sistem Basis Data UBSI Semester 3
 
 ## 🔧 Fitur
 - Login &  Register
