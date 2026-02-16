@@ -7,7 +7,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 $startAt = date('Y-m-d H:i:s');
 
 $config = [
-    'host' => getenv('DB_HOST') ?: '127.0.0.1',
+    'host' => getenv('DB_HOST') ?: 'localhost',
     'user' => getenv('DB_USER') ?: 'bioskop',
     'pass' => getenv('DB_PASS') ?: 'bioskop123',
     'name' => getenv('DB_NAME') ?: 'bioskop',
