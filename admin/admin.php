@@ -106,7 +106,16 @@
                 </thead>
                 <tbody align="center">
                     <?php 
-                    $query = mysqli_query($conn, "SELECT * FROM pelanggan WHERE `role` = 'admin' ORDER BY pelanggan_id DESC");
+                    $query = mysqli_query($conn, "SELECT *, 
+                        CASE 
+                            WHEN (foto IS NULL OR foto = '') AND role = 'admin' THEN 'admin_profil.jpg'
+                            WHEN (foto IS NULL OR foto = '') AND role = 'user' THEN 'img-default.jpg'
+                            WHEN (foto IS NULL OR foto = '') THEN 'demo_profil.svg'
+                            ELSE foto
+                        END AS foto_tampil
+                        FROM pelanggan 
+                        WHERE role = 'admin' 
+                        ORDER BY pelanggan_id DESC");
                     $i = 1;
                     
                     if (mysqli_num_rows($query) > 0) {
@@ -117,11 +126,7 @@
                             <td style="vertical-align: middle; text-align: center;"><?php echo $row["email"]; ?></td>
                             <td style="vertical-align: middle; text-align: center;"><?php echo $row["nama"]; ?></td>
                             <td align="center" style="vertical-align: middle; text-align: center;">
-                                <?php 
-                                $belumAdaFoto = "admin_profil.jpg";
-                                $foto = $row['foto'] ? $row['foto'] : $belumAdaFoto;
-                                ?>
-                                <img class="rounded-4" src="../img/<?php echo $foto; ?>" alt="foto produk" width="100" height="100">
+                                <img class="rounded-4" src="../img/<?php echo $row['foto_tampil']; ?>" alt="foto produk" width="100" height="100">
                             </td>
                             <td style="vertical-align: middle; text-align: center;">
                                 <?php 

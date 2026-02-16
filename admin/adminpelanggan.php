@@ -88,7 +88,7 @@
             <!-- Main Content -->
             <?php 
                 // $id_penjual = $data['id_penjual'];
-                $query = mysqli_query($conn, "SELECT * FROM pelanggan WHERE pelanggan_id AND `role` = 'user'");
+                $query = mysqli_query($conn, "SELECT * FROM pelanggan WHERE role = 'user'");
                 // $data = mysqli_fetch_assoc($query);
                 $count = mysqli_num_rows($query);
                 $color = "green";
@@ -115,7 +115,16 @@
                 <tbody align="center">
                 <tr>
                 <?php 
-                    $query = mysqli_query($conn, "SELECT * FROM pelanggan WHERE pelanggan_id AND `role` = 'user' ORDER BY pelanggan_id DESC ");
+                    $query = mysqli_query($conn, "SELECT *,
+                        CASE 
+                            WHEN (foto IS NULL OR foto = '') AND role = 'admin' THEN 'admin_profil.jpg'
+                            WHEN (foto IS NULL OR foto = '') AND role = 'user' THEN 'img-default.jpg'
+                            WHEN (foto IS NULL OR foto = '') THEN 'demo_profil.svg'
+                            ELSE foto
+                        END AS foto_tampil
+                        FROM pelanggan 
+                        WHERE role = 'user' 
+                        ORDER BY pelanggan_id DESC");
                     // $data = mysqli_fetch_assoc($query);
                     $i = 1;
                     $total_harga = 0;
@@ -126,17 +135,7 @@
                     <td style="vertical-align: middle; text-align: center;"><?php echo $row["email"]; ?></td>
                     <td style="vertical-align: middle; text-align: center;"><?php echo $row["nama"]; ?></td>
                     <td align="center" style="vertical-align: middle; text-align: center;">
-                    <?php 
-                    $belumAdaFoto = "demo_profil.svg";
-                    if($row['foto']==NULL){ 
-                        $row['foto'] = $belumAdaFoto;
-                        ?>
-                        <img class="rounded-4" src="../img/<?php echo $row['foto'] ?>" alt="foto produk" width="100" height="100">
-                    <?php }elseif($row['foto']==""){?>
-                        <img class="rounded-4" src="../img/<?php echo $row['foto'] ?>" alt="foto produk" width="100" height="100">
-                        <?php }else { ?>
-                            <img class="rounded-4" src="../img/<?php echo $row['foto'] ?>" alt="foto produk" width="100" height="100">
-                            <?php } ?>
+                    <img class="rounded-4" src="../img/<?php echo $row['foto_tampil']; ?>" alt="foto produk" width="100" height="100">
                     </td>
                     <!-- <td style="vertical-align: middle; text-align: center;">
                         <input type="number" class="form-control" value="1" readonly>

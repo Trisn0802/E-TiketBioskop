@@ -3,12 +3,10 @@
 @include "koneksi.php";
 
 session_start();
+$errors = [];
 
 // Cek apakah tombol submit sudah ditekan
 if (isset($_POST['submit'])) {
-    // Cek apakah variabel $_POST ada dan tidak kosong
-    // if (isset($_POST['id_pembeli']) && isset($_POST['nama_lengkap']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['role'])) {
-        // Jika ya, ambil nilai dari variabel $_POST
         $id = $_POST['pelanggan_id'];
         $nama = mysqli_real_escape_string($conn, $_POST['nama']);
         $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -41,7 +39,7 @@ if (isset($_POST['submit'])) {
                     }
                 } else {
                     // Jika tidak, tampilkan pesan error bahwa password salah
-                    $error[] = '<br>
+                    $errors[] = '<br>
                     <div class="mt-3 align-items-center justify-content-center" style="margin-left: 15%; width: 70%; margin-bottom: -15px;">
                     <div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
                     <div>Password salah!</div>
@@ -51,7 +49,7 @@ if (isset($_POST['submit'])) {
                 }
             } else {
                 // Jika tidak, tampilkan pesan error bahwa email dan password salah
-                $error[] = '<div class="mt-3 align-items-center justify-content-center" style="margin-left: 15%; width: 70%; margin-bottom: -15px;">
+                $errors[] = '<div class="mt-3 align-items-center justify-content-center" style="margin-left: 15%; width: 70%; margin-bottom: -15px;">
                 <div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
                 <div>Email dan password salah!</div>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -60,23 +58,42 @@ if (isset($_POST['submit'])) {
             }    
         } else {
             // Jika tidak, tampilkan pesan error bahwa query gagal
-            $error[] = '<div class="mt-3 align-items-center justify-content-center" style="margin-left: 15%; width: 70%; margin-bottom: -15px;">
+            $errors[] = '<div class="mt-3 align-items-center justify-content-center" style="margin-left: 15%; width: 70%; margin-bottom: -15px;">
             <div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
             <div>Query gagal: '.mysqli_error($conn).'</div>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             </div>';
         }
-    // } else {
-    //     // Jika tidak, tampilkan pesan error bahwa data tidak lengkap
-    //     $error[] = '<div class="align-items-center justify-content-center" style="margin-left: 15%; width: 70%;">
-    //     <div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
-    //     <div>Data tidak lengkap!</div>
-    //     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    //     </div>
-    //     </div>';
-    // }
 };
+
+// Pastikan tabel pengumuman tersedia
+mysqli_query($conn, "CREATE TABLE IF NOT EXISTS pengumuman (
+    pengumuman_id TINYINT NOT NULL DEFAULT 1,
+    judul VARCHAR(255) NOT NULL,
+    isi LONGTEXT NOT NULL,
+    status ENUM('aktif','nonaktif') NOT NULL DEFAULT 'nonaktif',
+    dibuat_pada TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    diupdate_pada TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (pengumuman_id),
+    CONSTRAINT chk_single_pengumuman CHECK (pengumuman_id = 1)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci");
+
+mysqli_query($conn, "INSERT INTO pengumuman (pengumuman_id, judul, isi, status)
+    SELECT 1, 'Pengumuman', '<p>Belum ada pengumuman.</p>', 'nonaktif'
+    WHERE NOT EXISTS (SELECT 1 FROM pengumuman WHERE pengumuman_id = 1)");
+
+$pengumuman_login = mysqli_query($conn, "SELECT judul, isi, dibuat_pada, status FROM pengumuman WHERE pengumuman_id = 1 LIMIT 1");
+$item = null;
+$isPengumumanAktif = false;
+$isIsiPengumumanKosong = true;
+
+if ($pengumuman_login && mysqli_num_rows($pengumuman_login) > 0) {
+    $item = mysqli_fetch_assoc($pengumuman_login);
+    $isPengumumanAktif = isset($item['status']) && $item['status'] === 'aktif';
+    $isiPolos = trim(strip_tags((string) $item['isi']));
+    $isIsiPengumumanKosong = ($isiPolos === '' || $isiPolos === 'Belum ada pengumuman.');
+}
 ?>
 </div>
 
@@ -97,13 +114,41 @@ if (isset($_POST['submit'])) {
 </head>
 
 <style>
-    
+    .pengumuman-content {
+        line-height: 1.5;
+        word-break: break-word;
+    }
+
+    .pengumuman-content p:last-child {
+        margin-bottom: 0;
+    }
+
+    .pengumuman-content img {
+        max-width: 100%;
+        height: auto;
+        display: inline-block;
+    }
+
+    .pengumuman-content img.note-float-left {
+        float: left;
+        margin-right: 10px;
+    }
+
+    .pengumuman-content img.note-float-right {
+        float: right;
+        margin-left: 10px;
+    }
+
+    .pengumuman-content img.note-float-none {
+        float: none;
+    }
 </style>
 
 <body class="bg-dark">
     <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-5 col-md-7 col-sm-9">
+        <div class="row align-items-center justify-content-center">
+            <div class="<?php echo $isPengumumanAktif ? 'col-lg-6 col-md-12' : 'col-lg-5 col-md-7 col-sm-9'; ?> mb-4">
+
                 <div class="card border-primary shadow-lg" id="draggableCard">
                     <div class="card-header bg-primary text-white text-center">
                     <h3>Login</h3>
@@ -124,9 +169,9 @@ if (isset($_POST['submit'])) {
                 </div>
                 <?php 
                     // Periksa apakah ada variable error
-                    if(isset($error)){
-                        foreach($error as $error){
-                        echo $error;
+                    if(isset($errors) && is_array($errors) && count($errors) > 0){
+                        foreach($errors as $errorMessage){
+                        echo $errorMessage;
                         };
                     }; 
                     // untuk mengambil pesan (dari berbagai variable) dari register.php 
@@ -186,16 +231,34 @@ if (isset($_POST['submit'])) {
                         }
                     </script>
                     <br>
-                    <!-- <center> -->
                     <button type="submit" name="submit" value="Login Sekarang" class="btn btn-primary btn-block w-100 mt-3">Login</button>
                     <button type="button" value="kembali" class="btn btn-success btn-block w-100 mt-3" onclick="location.href='index.php'">Home</button>
-                    <!-- </center> -->
                     <p class="mt-3 text-center">Belum punya akun? <a class="text-decoration-none" href="register.php">Daftar disini</a></p>
-                    <!-- <button id="toggleDraggable" class="btn btn-secondary btn-block mt-3">Fun Mode</button> -->
                     </form>
                     </div>
                 </div>
             </div>
+
+            <?php if ($isPengumumanAktif) { ?>
+            <div class="col-lg-6 col-md-12 mb-4">
+                <div class="card border-warning shadow-lg h-100">
+                    <div class="card-header bg-warning text-dark text-center">
+                        <h3 class="mb-0"><?php echo htmlspecialchars($item['judul']); ?></h3>
+                    </div>
+                    <div class="card-body bg-light" style="max-height: 580px; overflow-y: auto;">
+                        <div class="p-3 mb-3">
+                            <small class="badge bg-secondary text-bg-secondary"><?php echo date('d-m-Y H:i', strtotime($item['dibuat_pada'])); ?></small>
+                            <?php if ($isIsiPengumumanKosong) { ?>
+                                <div class="alert alert-info mt-2 mb-0">Belum ada pengumuman!</div>
+                            <?php } else { ?>
+                                <div class="pengumuman-content mt-2"><?php echo $item['isi']; ?></div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php } ?>
+
         </div>
     </div>
     <?php require "footer.php"; ?>

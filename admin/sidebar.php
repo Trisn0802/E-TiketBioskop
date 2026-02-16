@@ -16,6 +16,7 @@
     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="adminmovie.php??status=<?php echo $_SESSION['status']; ?>&id=<?php echo $_SESSION['idAdmin']; ?>"><i class="bi bi-film"></i> Movie</a>
     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="adminjadwal.php??status=<?php echo $_SESSION['status']; ?>&id=<?php echo $_SESSION['idAdmin']; ?>"><i class="bi bi-calendar-week"></i> Jadwal</a>
     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="adminkursi.php??status=<?php echo $_SESSION['status']; ?>&id=<?php echo $_SESSION['idAdmin']; ?>"><i class="bi bi-grid-3x3-gap-fill"></i> Kursi</a>
+    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="adminpengumuman.php??status=<?php echo $_SESSION['status']; ?>&id=<?php echo $_SESSION['idAdmin']; ?>"><i class="bi bi-megaphone-fill"></i> Pengumuman</a>
     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../logout.php" onclick="return confirm('Apakah kamu yakin ingin keluar!!');"><i class="bi bi-box-arrow-left"></i> Logout</a>
     <!-- <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a> -->

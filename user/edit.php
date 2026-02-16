@@ -41,6 +41,14 @@ session_start();
     $user = ($_SESSION['idUser']);
     $query = mysqli_query($conn, "SELECT * FROM pelanggan WHERE pelanggan_id='$user'");
     $data = mysqli_fetch_array($query);
+    $fotoDefaultUser = 'img-default.jpg';
+    $fotoTampil = $fotoDefaultUser;
+    if (!empty($data['foto'])) {
+      $candidateFoto = basename($data['foto']);
+      if (file_exists(__DIR__ . '/../img/' . $candidateFoto)) {
+        $fotoTampil = $candidateFoto;
+      }
+    }
 
     // Buat variabel PHP untuk menyimpan password asli
     $pass = $data['password'];
@@ -60,7 +68,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/bootstrap.css">
     <script src="../js/jquery.min.js"></script>
-    <script src="-../js/popper.js"></script>
+    <script src="../js/popper.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -93,59 +101,21 @@ session_start();
           <form action="" method="post" enctype="multipart/form-data">
             <div class="form-group text-center align-items-center">
             <center>
-            <?php if($data['foto'] === NULL){
-              $fotoBelumAda = 'demo_profil.svg';
-            ?>
-            <img src="../img/<?php echo $fotoBelumAda; ?>" alt="Ini foto profil anda" id="foto-preview-belum" width="300" height="300" class="rounded mb-3">
+            <img src="../img/<?php echo $fotoTampil; ?>" alt="Ini foto profil anda" id="foto-preview-user" width="300" height="300" class="rounded mb-3">
             <br>
             <label for="formFile" class="form-label">Upload foto anda!!</label>
-            <input class="form-control" type="file" name="foto" id="formFile" onchange="showPreviewBelum(event);">
+            <input class="form-control" type="file" name="foto" id="formFile" onchange="showPreviewFoto(event);">
+
             <script>
-              function showPreviewBelum(event){
+              function showPreviewFoto(event){
                 if(event.target.files.length > 0){
-                  var srcBelum = URL.createObjectURL(event.target.files[0]);
-                  var previewBelum = document.getElementById("foto-preview-belum");
-                  previewBelum.src = srcBelum;
-                  previewBelum.style.display = "block";
+                  var srcFoto = URL.createObjectURL(event.target.files[0]);
+                  var previewFoto = document.getElementById("foto-preview-user");
+                  previewFoto.src = srcFoto;
+                  previewFoto.style.display = "block";
                 }
               }
             </script>
-            <?php } elseif ($data['foto'] === ""){
-            $fotoBelumAda = 'demo_profil.svg';
-            ?>
-            <img src="../img/<?php echo $fotoBelumAda; ?>" alt="Ini foto profil anda" id="foto-preview-belum" width="300" height="300" class="rounded mb-3">
-            <br>
-            <label for="formFile" class="form-label">Upload foto anda!!</label>
-            <input class="form-control" type="file" name="foto" id="formFile" onchange="showPreviewBelum(event);">
-            <script>
-              function showPreviewBelum(event){
-                if(event.target.files.length > 0){
-                  var srcBelum = URL.createObjectURL(event.target.files[0]);
-                  var previewBelum = document.getElementById("foto-preview-belum");
-                  previewBelum.src = srcBelum;
-                  previewBelum.style.display = "block";
-                }
-              }
-            </script>
-
-          <?php  } else { ?>
-            <img src="../img/<?php echo $data['foto']; ?>" alt="Ini foto profil anda" id="foto-preview-sudah" width="300" height="300" class="rounded mb-3">
-            <br>
-            <label for="formFile" class="form-label">Upload foto anda!!</label>
-            <input class="form-control" type="file" name="foto" id="formFile" onchange="showPreviewSudah(event);">
-
-            <script>
-              function showPreviewSudah(event){
-                if(event.target.files.length > 0){
-                  var srcSudah = URL.createObjectURL(event.target.files[0]);
-                  var previewSudah = document.getElementById("foto-preview-sudah");
-                  previewSudah.src = srcSudah;
-                  previewSudah.style.display = "block";
-                }
-              }
-            </script>
-
-          <?php } ?>
 
             </center>
               <div class="mb-3">
@@ -231,7 +201,8 @@ session_start();
                     <!-- pattern="^\+?[0-9]+$" -->
                 </div>
                 <button type="submit" name="submit" class="btn btn-primary mt-4">Simpan Perubahan</button>
-                  <button class="btn btn-secondary mt-4" onclick="history.back()">Kembali</button>
+                  <!-- <button class="btn btn-secondary mt-4" onclick="location.href='../index.php'">Kembali</button> -->
+                   <a href="../index.php" class="btn btn-secondary mt-4">Kembali</a>
                 </form>
                 </div>
                 </div>

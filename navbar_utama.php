@@ -7,21 +7,20 @@
     </button>
     <div class="offcanvas offcanvas-end text-bg-primary" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header">
+      <?php
+        $fotoNavbar = 'img-default.jpg';
+        if (isset($data['foto']) && !empty($data['foto'])) {
+          $candidateFoto = basename($data['foto']);
+          if (file_exists(__DIR__ . '/img/' . $candidateFoto)) {
+            $fotoNavbar = $candidateFoto;
+          }
+        }
+      ?>
       <?php if(!isset($_SESSION['idUser'])) { ?>
         <h5 class="offcanvas-title" id="offcanvasNavbarLabel"><i class="bi bi-exclamation-circle-fill"></i> Belum Login</h5>
-        <?php } elseif($data['foto'] === NULL){
-          $fotoBelumAda = 'demo_profil.svg';
-        ?>
+        <?php } else { ?>
         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Hallo, <?php echo $data['nama']; ?></h5>
-          <img src="img/<?php echo $fotoBelumAda; ?>" alt="ini foto anda" width="50" class="thumbnail float-start rounded" style="margin-right: 80px;">
-        <?php } elseif ($data['foto'] === ""){
-          $fotoBelumAda = 'demo_profil.svg';
-        ?>
-        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Hallo, <?php echo $data['nama']; ?></h5>
-          <img src="img/<?php echo $fotoBelumAda; ?>" alt="ini foto anda" width="50" class="thumbnail float-start rounded" style="margin-right: 80px;">
-        <?php  } else { ?>
-          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Hallo, <?php echo $data['nama']; ?></h5>
-          <img src="img/<?php echo $data['foto']; ?>" alt="ini foto anda" width="50" class="thumbnail float-start rounded" style="margin-right: 80px;">
+          <img src="img/<?php echo $fotoNavbar; ?>" alt="ini foto anda" width="50" class="thumbnail float-start rounded" style="margin-right: 80px;">
           <?php } ?>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>

@@ -72,6 +72,9 @@
         } else {
             // Jika pengguna memilih foto baru, upload foto baru
             $foto = upload();
+            if (!$foto) {
+                return -1;
+            }
         }
 
         // cek apakah user mengganti nomor HP atau tidak
@@ -145,7 +148,6 @@
     function upload() {
         $namaFile = $_FILES['foto']['name'];
         $ukuranFile = $_FILES['foto']['size'];
-        $ukuranFile = $_FILES['foto']['size'];
         $error = $_FILES['foto']['error'];
         $tmpName = $_FILES['foto']['tmp_name'];
 
@@ -171,6 +173,18 @@
             return false;
         }
 
+        // validasi MIME agar file benar-benar gambar
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mimeType = finfo_file($finfo, $tmpName);
+        finfo_close($finfo);
+        $mimeValid = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'];
+        if (!in_array($mimeType, $mimeValid)) {
+            echo "<script>
+                alert('File yang diupload bukan gambar yang valid.');
+                </script>";
+            return false;
+        }
+
         // cek jika ukuran file nya terlalu besar
         if($ukuranFile > 5000000 ) {
             echo "<script>
@@ -185,7 +199,12 @@
         $namaFileBaru .= '.';
         $namaFileBaru .= $ekstensifoto;
 
-        move_uploaded_file($tmpName, '../img/' . $namaFileBaru);
+        if (!is_uploaded_file($tmpName) || !move_uploaded_file($tmpName, '../img/' . $namaFileBaru)) {
+            echo "<script>
+                alert('Gagal mengupload foto, coba lagi.');
+                </script>";
+            return false;
+        }
 
         return $namaFileBaru;
         // Pada awalnya, function ini menerima file foto yang diupload oleh user. Kemudian, function 
