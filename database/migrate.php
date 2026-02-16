@@ -8,8 +8,8 @@ $startAt = date('Y-m-d H:i:s');
 
 $config = [
     'host' => getenv('DB_HOST') ?: '127.0.0.1',
-    'user' => getenv('DB_USER') ?: 'root',
-    'pass' => getenv('DB_PASS') ?: '',
+    'user' => getenv('DB_USER') ?: 'bioskop',
+    'pass' => getenv('DB_PASS') ?: 'bioskop123',
     'name' => getenv('DB_NAME') ?: 'bioskop',
     'port' => (int) (getenv('DB_PORT') ?: 3306),
 ];
