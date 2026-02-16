@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+require_once dirname(__DIR__) . '/config/env.php';
+loadEnvFile(dirname(__DIR__) . '/.env');
+
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 $startAt = date('Y-m-d H:i:s');
