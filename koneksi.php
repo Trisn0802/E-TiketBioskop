@@ -1,4 +1,4 @@
-<div style="display: none;">
+<!-- <div style="display: none;"> -->
 <?php
 require_once __DIR__ . '/config/env.php';
 loadEnvFile(__DIR__ . '/.env');
@@ -18,4 +18,4 @@ if (!$conn) {
 }
 
 ?>
-</div>
+<!-- </div> -->
