@@ -1,4 +1,4 @@
-<div class="d-none">
+<!-- <div class="d-none"> -->
 <?php
 @include '../koneksi.php';
 @include '../function.php';
@@ -57,7 +57,7 @@ session_start();
 
     // var_dump($data)
 ?>
-</div>
+<!-- </div> -->
 
 
 <!DOCTYPE html>

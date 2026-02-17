@@ -1,4 +1,4 @@
-<div class="d-none">
+<!-- <div class="d-none"> -->
 <?php 
     include ("../koneksi.php");
 
@@ -6,7 +6,7 @@
 
     if(isset($_SESSION['status']) && isset($_SESSION['idAdmin'])) {
         //cek nama lengkap user
-        $perkenalan = $_SESSION['nama'];
+        // $perkenalan = $_SESSION['nama'];
         $idAdmin = $_SESSION['idAdmin'];
     
         // Ambil data user dari database
@@ -21,7 +21,7 @@
     } 
 
 ?>
-</div>
+<!-- </div> -->
 
 <!DOCTYPE html>
 <html lang="en">

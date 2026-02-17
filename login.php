@@ -1,4 +1,4 @@
-<div style="display: none;">    
+<!-- <div style="display: none;">     -->
 <?php
 @include "koneksi.php";
 
@@ -95,7 +95,7 @@ if ($pengumuman_login && mysqli_num_rows($pengumuman_login) > 0) {
     $isIsiPengumumanKosong = ($isiPolos === '' || $isiPolos === 'Belum ada pengumuman.');
 }
 ?>
-</div>
+<!-- </div> -->
 
 
 <!DOCTYPE html>

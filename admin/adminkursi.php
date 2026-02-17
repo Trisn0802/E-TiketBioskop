@@ -1,4 +1,4 @@
-<div class="d-none">
+<!-- <div class="d-none"> -->
 <?php 
     include ("../koneksi.php");
     include ("../function.php");
@@ -81,7 +81,7 @@
     $result = mysqli_query($conn, $query);
 
 ?>
-</div>
+<!-- </div> -->
 
 <!DOCTYPE html>
 <html lang="en">

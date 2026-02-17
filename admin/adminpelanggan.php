@@ -1,4 +1,4 @@
-<div class="d-none">
+<!-- <div class="d-none"> -->
 <?php 
     include ("../koneksi.php");
 
@@ -20,7 +20,8 @@
         }
     } 
 ?>
-</div>
+<!-- </div> -->
+ 
 <!DOCTYPE html>
 <html lang="en">
     <head>

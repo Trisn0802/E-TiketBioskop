@@ -1,4 +1,4 @@
-<div style="display: none;">
+<!-- <div style="display: none;"> -->
 <?php
     @include "koneksi.php";
 
@@ -298,4 +298,4 @@
 // ini_set('display_errors', 'Off');
 
 ?>
-</div>
+<!-- </div> -->

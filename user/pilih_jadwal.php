@@ -1,4 +1,4 @@
-<div class="d-none">
+<!-- <div class="d-none"> -->
 <?php
 @include '../function.php';
 @include '../koneksi.php';
@@ -19,7 +19,7 @@ if(isset($_SESSION['status']) && isset($_SESSION['idUser'])){
     }
 
 ?>
-</div>
+<!-- </div> -->
 
 <!DOCTYPE html>
 <html lang="en">

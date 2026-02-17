@@ -1,4 +1,4 @@
-<div class="d-none">
+<!-- <div class="d-none"> -->
 <?php
 include("../koneksi.php");
 
@@ -75,7 +75,7 @@ $dataPengumuman = mysqli_fetch_assoc($pengumuman);
 $dibuatAt = !empty($dataPengumuman['dibuat_pada']) ? date('d-m-Y H:i', strtotime($dataPengumuman['dibuat_pada'])) : '-';
 $diupdateAt = !empty($dataPengumuman['diupdate_pada']) ? date('d-m-Y H:i', strtotime($dataPengumuman['diupdate_pada'])) : '-';
 ?>
-</div>
+<!-- </div> -->
 
 <!DOCTYPE html>
 <html lang="en">
