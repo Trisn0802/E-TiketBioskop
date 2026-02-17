@@ -11,10 +11,10 @@ $startAt = date('Y-m-d H:i:s');
 
 $config = [
     'host' => getenv('DB_HOST') ?: 'localhost',
-    'user' => getenv('DB_USER') ?: 'bioskop',
-    'pass' => getenv('DB_PASS') ?: 'bioskop123',
-    'name' => getenv('DB_NAME') ?: 'bioskop',
-    'port' => (int) (getenv('DB_PORT') ?: 3306),
+    'user' => getenv('DB_USER'),
+    'pass' => getenv('DB_PASS'),
+    'name' => getenv('DB_NAME'),
+    'port' => (int) (getenv('DB_PORT')),
 ];
 
 try {

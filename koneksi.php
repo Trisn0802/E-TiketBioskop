@@ -4,10 +4,10 @@ require_once __DIR__ . '/config/env.php';
 loadEnvFile(__DIR__ . '/.env');
 
 $host = getenv('DB_HOST') ?: 'localhost';
-$username = getenv('DB_USER') ?: 'root';
-$password = getenv('DB_PASS') ?: '';
-$dbname = getenv('DB_NAME') ?: 'bioskop';
-$port = (int) (getenv('DB_PORT') ?: 3306);
+$username = getenv('DB_USER');
+$password = getenv('DB_PASS');
+$dbname = getenv('DB_NAME');
+$port = (int) (getenv('DB_PORT'));
 
 // Create connection
 $conn = mysqli_connect($host, $username, $password, $dbname, $port);
