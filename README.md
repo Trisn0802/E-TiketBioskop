@@ -10,7 +10,8 @@ Ini merupakan tugas akhir dari Mata Kuliah Sistem Basis Data UBSI Semester 3
 ## 🚀 Instalasi
 - Ubah nama folder movie.example menjadi movie
 - Buka aplikasi XAMPP dan start Apache dan MySQL nya
-- Import database bioskop.sql
+- Ganti nama file .env.example menjadi .env
+- lalu ubah isi .env nya untuk kebutuhan server
 
 ## 🛠️ Alat Yang Digunakan
 - PHP Native
